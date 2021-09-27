@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { GuestGuard } from './shared/guards/guest.guard';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
       multi: true,
       useClass: TokenInterceptor
     },
-    AuthGuard
+    AuthGuard,
+    GuestGuard
   ],
   bootstrap: [AppComponent]
 })
