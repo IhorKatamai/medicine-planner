@@ -32,4 +32,11 @@ export class SchedulesComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  searchSchedule() {
+    this.schedulesService.getAll(this.searchString).then(response => {
+      this.dataSource.data = response;
+      console.log(response);
+    });
+  }
+
 }
