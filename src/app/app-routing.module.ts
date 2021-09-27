@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./schedules/schedules.module').then(m => m.SchedulesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'auth',
-    component: AuthComponent
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
 ];
 

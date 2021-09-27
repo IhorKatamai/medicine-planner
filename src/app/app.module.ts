@@ -9,14 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
-import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,12 +40,12 @@ import { AuthComponent } from './auth/auth.component';
         ]
       } as SocialAuthServiceConfig,
     },
-    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: TokenInterceptor
-    }
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

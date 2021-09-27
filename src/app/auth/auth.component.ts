@@ -12,20 +12,18 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit, OnDestroy {
 
+  subscription!: Subscription;
+
   constructor(
     private socialAuthService: SocialAuthService,
     private authService: AuthService,
     private router: Router,
   ) { }
 
-  subscription!: Subscription;
-
   ngOnInit() {
     this.subscription = this.socialAuthService.authState.subscribe((user) => {
       this.authService.getToken({idToken: user.idToken})
-        .then(() => {
-          this.router.navigate(['/']);
-        });
+        .then(() => this.router.navigate(['/']));
     });
   }
 
