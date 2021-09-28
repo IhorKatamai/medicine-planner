@@ -22,7 +22,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.socialAuthService.authState.subscribe((user) => {
-      this.authService.getToken({idToken: user.idToken})
+      this.authService.getToken({idToken: user.idToken, googleToken: user.authToken})
         .then(() => this.router.navigate(['/']));
     });
   }

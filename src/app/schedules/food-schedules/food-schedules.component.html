@@ -1,0 +1,59 @@
+<div class="panel">
+  <h1 class="title">Food Schedules</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Search by Date</mat-label>
+    <input matInput [matDatepicker]="picker"
+           [(ngModel)]="pickedDate"
+           (ngModelChange)="searchFoodSchedules(pickedDate)"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="pickedDate" class="panel-btn">
+    <button type="button" mat-raised-button color="primary" (click)="pickedDate=undefined; searchFoodSchedules(pickedDate)">
+      Cancel
+    </button>
+  </div>
+</div>
+<div class="table-wrap mat-elevation-z8">
+  <table class="schedules-table" mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef> No</th>
+      <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date</th>
+      <td mat-cell *matCellDef="let foodSchedule"> {{foodSchedule.date | date: 'dd.MM.yyyy'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="time-of-first-meal">
+      <th mat-header-cell *matHeaderCellDef> Time of First Meal</th>
+      <td mat-cell *matCellDef="let foodSchedule"> {{foodSchedule.timeOfFirstMeal | date: 'hh:mm'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="number-of-meals">
+      <th mat-header-cell *matHeaderCellDef> Number of meals</th>
+      <td mat-cell *matCellDef="let foodSchedule"> {{foodSchedule.numberOfMeals}} </td>
+    </ng-container>
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef> Operations</th>
+      <td mat-cell *matCellDef="let foodSchedule">
+        <button mat-icon-button color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

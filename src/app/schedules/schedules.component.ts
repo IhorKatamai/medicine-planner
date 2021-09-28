@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 import { SchedulesService } from './schedules.service';
 import { Schedule } from '../../core/models/schedule.model';
@@ -19,12 +20,11 @@ export class SchedulesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private schedulesService: SchedulesService) { }
+  constructor(private schedulesService: SchedulesService, private router: Router) { }
 
   ngOnInit(): void {
     this.schedulesService.getAll().then(response => {
       this.dataSource.data = response;
-      console.log(response);
     });
   }
 
@@ -35,8 +35,11 @@ export class SchedulesComponent implements OnInit, AfterViewInit {
   searchSchedule() {
     this.schedulesService.getAll(this.searchString).then(response => {
       this.dataSource.data = response;
-      console.log(response);
     });
+  }
+
+  onView(id: string) {
+    return this.router.navigate([`/food-schedules/${id}`]);
   }
 
 }

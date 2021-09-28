@@ -5,6 +5,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,20 +13,25 @@ import { environment } from '../environments/environment';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { GuestGuard } from './shared/guards/guest.guard';
+import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [
     AppComponent,
+    SidenavComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SocialLoginModule,
-    AppRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        SocialLoginModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatNativeDateModule,
+        MatSidenavModule,
+    ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
@@ -47,7 +53,8 @@ import { GuestGuard } from './shared/guards/guest.guard';
       useClass: TokenInterceptor
     },
     AuthGuard,
-    GuestGuard
+    GuestGuard,
+    { provide: MAT_DATE_LOCALE, useValue: 'uk-UA' }
   ],
   bootstrap: [AppComponent]
 })
