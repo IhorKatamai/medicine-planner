@@ -27,4 +27,19 @@ export class SchedulesService {
     }).pipe(map(response  => [response].filter(Boolean)))
       .toPromise();
   }
+
+  editFoodSchedule(foodScheduleId: string, payload: Partial<FoodSchedule>): Promise<void> {
+    return this.http.put<void>(`${environment.apiUrl}/MedicineSchedules/FoodSchedules/${foodScheduleId}`, payload)
+      .toPromise();
+  }
+
+  setAsDefaultFoodSchedule(foodScheduleId: string): Promise<void> {
+    return this.http.post<void>(`${environment.apiUrl}/MedicineSchedules/FoodSchedules/MakeDefault/${foodScheduleId}`, {})
+      .toPromise();
+  }
+
+  deleteFoodSchedule(foodScheduleId: string): Promise<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/MedicineSchedules/FoodSchedules/${foodScheduleId}`)
+      .toPromise();
+  }
 }

@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 
 import { FoodSchedule } from '../../../core/models/food-schedule.model';
 import { SchedulesService } from '../schedules.service';
-import {formatDate} from "../../shared/utils/date";
+import { formatDate } from '../../shared/utils/date';
 
 @Component({
   selector: 'app-food-schedules',
@@ -14,6 +14,7 @@ import {formatDate} from "../../shared/utils/date";
 })
 export class FoodSchedulesComponent implements OnInit, AfterViewInit {
 
+  isLoading: boolean = false;
   pickedDate?: Date | undefined;
 
   columnsToDisplay: string[] = ['number', 'date', 'time-of-first-meal', 'number-of-meals', 'operations'];
@@ -44,6 +45,11 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
       this.schedulesService.getFoodSchedulesForMedicineSchedule(this.route.snapshot.params.id)
         .then(response => this.onData(response));
     }
+  }
+
+  onSetDefault(foodScheduleId: string) {
+    this.schedulesService.setAsDefaultFoodSchedule(foodScheduleId)
+      .then(() => console.log('Ready'));
   }
 
 }

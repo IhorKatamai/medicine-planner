@@ -20,16 +20,16 @@ import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
     AppComponent,
     SidenavComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        SocialLoginModule,
-        AppRoutingModule,
-        MatButtonModule,
-        MatIconModule,
-        MatNativeDateModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SocialLoginModule,
+    AppRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatNativeDateModule,
+  ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

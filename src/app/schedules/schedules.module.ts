@@ -7,12 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SchedulesRoutingModule } from './schedules-routing.module';
 import { SchedulesComponent } from './schedules.component';
 import { SchedulesService } from './schedules.service';
 import { FoodSchedulesComponent } from './food-schedules/food-schedules.component';
-import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 
 @NgModule({
@@ -20,17 +20,18 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
     SchedulesComponent,
     FoodSchedulesComponent
   ],
-    imports: [
-        CommonModule,
-        SchedulesRoutingModule,
-        MatButtonModule,
-        FormsModule,
-        MatInputModule,
-        MatIconModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatDatepickerModule,
-    ],
+  imports: [
+    CommonModule,
+    SchedulesRoutingModule,
+    MatButtonModule,
+    FormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatTooltipModule,
+  ],
   providers: [SchedulesService],
 })
 export class SchedulesModule { }
