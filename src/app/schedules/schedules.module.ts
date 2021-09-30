@@ -13,6 +13,7 @@ import { SchedulesRoutingModule } from './schedules-routing.module';
 import { SchedulesComponent } from './schedules.component';
 import { SchedulesService } from './schedules.service';
 import { FoodSchedulesComponent } from './food-schedules/food-schedules.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { FoodSchedulesComponent } from './food-schedules/food-schedules.componen
     MatPaginatorModule,
     MatDatepickerModule,
     MatTooltipModule,
+    SharedModule
   ],
   providers: [SchedulesService],
 })

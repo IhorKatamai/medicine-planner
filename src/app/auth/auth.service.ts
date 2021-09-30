@@ -30,14 +30,21 @@ export class AuthService {
       });
   }
 
-  logout(): Promise<void> {
-    return this.socialAuthService.signOut().then(() => {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('googleToken');
-      localStorage.removeItem('email');
-      localStorage.removeItem('name');
-      localStorage.removeItem('surname');
-      localStorage.removeItem('photo');
-    });
+  logout(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('googleToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('surname');
+    localStorage.removeItem('photo');
+
+    // return this.socialAuthService.signOut().then(() => {
+    //   localStorage.removeItem('accessToken');
+    //   localStorage.removeItem('googleToken');
+    //   localStorage.removeItem('email');
+    //   localStorage.removeItem('name');
+    //   localStorage.removeItem('surname');
+    //   localStorage.removeItem('photo');
+    // });
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from './auth.service';
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-auth',

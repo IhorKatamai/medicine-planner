@@ -48,8 +48,10 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
   }
 
   onSetDefault(foodScheduleId: string) {
+    this.isLoading = true;
     this.schedulesService.setAsDefaultFoodSchedule(foodScheduleId)
-      .then(() => console.log('Ready'));
+      .then(() => console.log('Ready'))
+      .finally(() => this.isLoading = false);
   }
 
 }
