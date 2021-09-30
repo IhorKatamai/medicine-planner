@@ -1,4 +1,4 @@
-<main class="page-wrapper">
+<div class="auth-wrapper">
   <div class="text-wrapper">
     <h1 class="title">MedicinePlanner</h1>
     <p class="hint">
@@ -26,4 +26,12 @@
       Login
     </button>
   </div>
-</main>
+</div>
+
+<div *ngIf="isLoading" class="loader">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate"
+    value="50">
+  </mat-progress-spinner>
+</div>

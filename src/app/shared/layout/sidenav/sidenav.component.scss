@@ -1,0 +1,27 @@
+.sidenav {
+  width: 320px;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #3F51B5;
+
+  &__title, &__link, &__btn {
+    color: #FFFFFF;
+    font-size: 26px;
+    text-decoration: none;
+  }
+  &__link, &__btn {
+    font-size: 22px;
+  }
+  &__btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  &__link:hover, &__btn:hover {
+    color: #FDA50F;
+  }
+}
+
+.active-link {
+  color: #FFD300;
+}

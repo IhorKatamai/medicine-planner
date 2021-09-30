@@ -1,1 +1,42 @@
-<p>sidenav works!</p>
+<nav class="sidenav">
+  <div>
+    <a class="sidenav__title" routerLink="">MedicinePlanner</a>
+  </div>
+  <div>
+    <div>
+      <img src="" alt="">
+    </div>
+    <div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div>
+  <div>
+    <a class="sidenav__link"
+       routerLink=""
+       routerLinkActive="active-link"
+       [routerLinkActiveOptions]="{exact: true}"
+    >My Schedules</a>
+  </div>
+  <div>
+    <a class="sidenav__link"
+       routerLink="/create"
+       routerLinkActive="active-link"
+       [routerLinkActiveOptions]="{exact: true}"
+    >New Schedule</a>
+  </div>
+  <div>
+    <a class="sidenav__link"
+       routerLink="/medicine"
+       routerLinkActive="active-link"
+       [routerLinkActiveOptions]="{exact: true}"
+    >Medicine List</a>
+  </div>
+  <div>
+    <button class="sidenav__btn" (click)="logout()">Logout</button>
+  </div>
+</nav>

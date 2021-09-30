@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SocialAuthService } from 'angularx-social-login';
 
 import { environment } from '../../environments/environment';
 import { AccessTokenResponse } from '../../core/models/access-token-response.model';
@@ -8,7 +9,7 @@ import { UserResponse } from '../../core/models/user-response.model';
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socialAuthService: SocialAuthService) { }
 
   getToken({idToken, googleToken}: any): Promise<void> {
     return this.http.post<AccessTokenResponse>(`${environment.apiUrl}/Auth/Google`, {idToken})
@@ -27,5 +28,16 @@ export class AuthService {
         localStorage.setItem('surname', response.surname);
         localStorage.setItem('photo', response.photo);
       });
+  }
+
+  logout(): Promise<void> {
+    return this.socialAuthService.signOut().then(() => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('googleToken');
+      localStorage.removeItem('email');
+      localStorage.removeItem('name');
+      localStorage.removeItem('surname');
+      localStorage.removeItem('photo');
+    });
   }
 }

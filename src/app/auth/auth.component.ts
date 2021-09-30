@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 export class AuthComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
+  isLoading: boolean = false;
 
   constructor(
     private socialAuthService: SocialAuthService,
@@ -22,8 +23,10 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.socialAuthService.authState.subscribe((user) => {
+      this.isLoading = true;
       this.authService.getToken({idToken: user.idToken, googleToken: user.authToken})
-        .then(() => this.router.navigate(['/']));
+        .then(() => this.router.navigate(['/']))
+        .finally(() => this.isLoading = false);
     });
   }
 
