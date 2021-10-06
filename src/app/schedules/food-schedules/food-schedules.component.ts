@@ -9,6 +9,7 @@ import { FoodSchedule } from '../../../core/models/food-schedule.model';
 import { FoodSchedulesService } from './food-schedules.service';
 import { formatDate } from '../../shared/utils/date';
 import { ConfirmationDialogComponent } from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { FoodSchedulesEditDialogComponent } from './food-schedules-edit-dialog/food-schedules-edit-dialog.component';
 
 @Component({
   selector: 'app-food-schedules',
@@ -56,6 +57,13 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
       this.foodSchedulesService.getAll(this.medicineScheduleId)
         .then(response => this.onData(response));
     }
+  }
+
+  onEdit(foodScheduleId: string, timeOfFirstMeal: string, numberOfMeals: string) {
+    const dialogRef = this.dialog.open(FoodSchedulesEditDialogComponent, {
+      data: { timeOfFirstMeal, numberOfMeals }
+    });
+    dialogRef.afterClosed().subscribe(result => console.log(result));
   }
 
   onSetDefault(foodScheduleId: string) {

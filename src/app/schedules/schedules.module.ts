@@ -9,6 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SchedulesRoutingModule } from './schedules-routing.module';
 import { SchedulesComponent } from './schedules.component';
@@ -16,12 +17,14 @@ import { SchedulesService } from './schedules.service';
 import { FoodSchedulesComponent } from './food-schedules/food-schedules.component';
 import { FoodSchedulesService } from './food-schedules/food-schedules.service';
 import { SharedModule } from '../shared/shared.module';
+import { FoodSchedulesEditDialogComponent } from './food-schedules/food-schedules-edit-dialog/food-schedules-edit-dialog.component';
 
 
 @NgModule({
   declarations: [
     SchedulesComponent,
-    FoodSchedulesComponent
+    FoodSchedulesComponent,
+    FoodSchedulesEditDialogComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { SharedModule } from '../shared/shared.module';
     MatDatepickerModule,
     MatTooltipModule,
     MatSnackBarModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule
   ],
   providers: [SchedulesService, FoodSchedulesService],
 })
