@@ -13,6 +13,7 @@ import { Schedule } from '../../core/models/schedule.model';
 })
 export class SchedulesComponent implements OnInit, AfterViewInit {
 
+  isLoading: boolean = false;
   searchString: string = '';
 
   columnsToDisplay: string[] = ['number', 'medicine-name', 'start-date', 'end-date', 'operations'];
@@ -23,9 +24,10 @@ export class SchedulesComponent implements OnInit, AfterViewInit {
   constructor(private schedulesService: SchedulesService, private router: Router) { }
 
   ngOnInit(): void {
-    this.schedulesService.getAll().then(response => {
-      this.dataSource.data = response;
-    });
+    this.isLoading = true;
+    this.schedulesService.getAll()
+      .then(response => this.dataSource.data = response)
+      .finally(() => this.isLoading = false);
   }
 
   ngAfterViewInit() {
@@ -33,9 +35,7 @@ export class SchedulesComponent implements OnInit, AfterViewInit {
   }
 
   searchSchedule() {
-    this.schedulesService.getAll(this.searchString).then(response => {
-      this.dataSource.data = response;
-    });
+    this.schedulesService.getAll(this.searchString).then(response => this.dataSource.data = response);
   }
 
   onView(id: string) {

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { AuthService } from './auth/auth.service';
+import { ProfileService } from './auth/profile.service';
 import { LayoutService } from './shared/layout/layout.service';
 
 @Component({
@@ -13,8 +14,8 @@ export class AppComponent {
   isLoggedIn$: Observable<boolean>;
   isOpened$: Observable<boolean>;
 
-  constructor(private authService: AuthService, private layoutService: LayoutService) {
-    this.isLoggedIn$ = this.authService.isLoggedIn$;
+  constructor(private profileService: ProfileService, private layoutService: LayoutService) {
+    this.isLoggedIn$ = this.profileService.profile$.pipe(map(Boolean));
     this.isOpened$ = this.layoutService.isOpened$;
   }
 

@@ -2,6 +2,15 @@
   <div>
     <a class="sidenav__title" routerLink="/">MedicinePlanner</a>
   </div>
+  <div *ngIf="profile$ | async as profile" class="sidenav__profile-wrapper">
+    <div class="sidenav__profile-img">
+      <img [src]="profile.photo" alt="profile-img">
+    </div>
+    <div>
+      <div class="sidenav__profile-name">Hello, {{profile.name}} {{profile.surname}}</div>
+      <div class="sidenav__profile-email">{{profile.email}}</div>
+    </div>
+  </div>
   <div class="sidenav__link-wrapper">
     <a class="sidenav__link"
        routerLink="/"

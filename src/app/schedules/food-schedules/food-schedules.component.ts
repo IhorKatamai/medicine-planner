@@ -34,8 +34,10 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.foodSchedulesService.getAll(this.medicineScheduleId)
-      .then(response => this.onData(response));
+      .then(response => this.onData(response))
+      .finally(() => this.isLoading = false);
   }
 
   ngAfterViewInit() {

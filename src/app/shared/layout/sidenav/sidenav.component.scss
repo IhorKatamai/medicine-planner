@@ -2,8 +2,30 @@
 
   &__content-wrapper {
     height: 100%;
-    padding: 30px 20px;
+    padding: 40px 30px;
     background-color: #3F51B5;
+  }
+  &__profile-wrapper {
+    display: flex;
+    margin: 20px 0 16px;
+    align-items: center;
+  }
+  &__profile-img img {
+    width: 60px;
+    height: 60px;
+    margin-right: 16px;
+    border-radius: 50%;
+  }
+  &__profile-name,
+  &__profile-email {
+    color: #FFFFFF;
+  }
+  &__profile-name {
+    margin-bottom: 8px;
+    font-size: 20px;
+  }
+  &__profile-email {
+    font-size: 16px;
   }
   &__link-wrapper {
     margin: 16px 0;
@@ -14,7 +36,7 @@
   }
   &__title, &__link, &__btn {
     color: #FFFFFF;
-    font-size: 26px;
+    font-size: 28px;
     text-decoration: none;
   }
   &__link, &__btn {
