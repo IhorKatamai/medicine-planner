@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SocialAuthService } from 'angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { AccessTokenResponse } from '../../core/models/access-token-response.model';
 import { UserResponse } from '../../core/models/user-response.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
+  isLoggedIn$ = new BehaviorSubject<boolean>(Boolean(localStorage.accessToken && localStorage.googleToken));
 
-  constructor(private http: HttpClient, private socialAuthService: SocialAuthService) { }
+  constructor(private http: HttpClient, private socialAuthService: SocialAuthService) {}
 
-  getToken({idToken, googleToken}: any): Promise<void> {
-    return this.http.post<AccessTokenResponse>(`${environment.apiUrl}/Auth/Google`, {idToken})
+  getToken({ idToken, googleToken }: { idToken: string, googleToken: string }): Promise<void> {
+    return this.http.post<AccessTokenResponse>(`${environment.apiUrl}/Auth/Google`, { idToken })
       .toPromise().then(response => {
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('googleToken', googleToken);
@@ -30,21 +32,22 @@ export class AuthService {
       });
   }
 
-  logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('googleToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    localStorage.removeItem('surname');
-    localStorage.removeItem('photo');
+  signIn() {
+    return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((user) => this.getToken({ idToken: user.idToken, googleToken: user.authToken }))
+      .then(() => this.isLoggedIn$.next(true));
+  }
 
-    // return this.socialAuthService.signOut().then(() => {
-    //   localStorage.removeItem('accessToken');
-    //   localStorage.removeItem('googleToken');
-    //   localStorage.removeItem('email');
-    //   localStorage.removeItem('name');
-    //   localStorage.removeItem('surname');
-    //   localStorage.removeItem('photo');
-    // });
+  logout(): Promise<void> {
+    return this.socialAuthService.signOut()
+      .then(() => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('googleToken');
+        localStorage.removeItem('email');
+        localStorage.removeItem('name');
+        localStorage.removeItem('surname');
+        localStorage.removeItem('photo');
+        this.isLoggedIn$.next(false);
+      });
   }
 }

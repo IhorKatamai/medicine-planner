@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { AuthService } from '../../../auth/auth.service';
 
@@ -7,18 +8,14 @@ import { AuthService } from '../../../auth/auth.service';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
-  providers: [AuthService]
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
+  @Input() opened!: Observable<boolean>;
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private router: Router, private authService: AuthService) { }
 
   logout() {
-    // this.authService.logout().then(() => this.router.navigate(['/auth']));
-    this.authService.logout();
-    this.router.navigate(['/auth']);
+    return this.authService.logout()
+      .then(() => this.router.navigate(['/auth']));
   }
 }

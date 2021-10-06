@@ -10,11 +10,12 @@ export class GuestGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<boolean> | boolean {
-
+    state: RouterStateSnapshot
+  ): Promise<boolean> | boolean {
     if (localStorage.getItem('accessToken')) {
       return this.router.navigate(['/']).then(() => false);
     }
+
     return true;
   }
 

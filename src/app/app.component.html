@@ -1,4 +1,21 @@
-<main class="main">
-  <app-sidenav></app-sidenav>
-  <router-outlet></router-outlet>
+<main>
+  <ng-container *ngIf="isLoggedIn$ | async; else auth">
+    <mat-drawer-container autosize>
+      <mat-drawer [opened]="isOpened$ | async" mode="side">
+        <app-sidenav></app-sidenav>
+      </mat-drawer>
+
+      <div class="main-content">
+        <div>
+          <button mat-mini-fab color="primary" (click)="toggleSidenav()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-container>
+  </ng-container>
+  <ng-template #auth>
+    <router-outlet></router-outlet>
+  </ng-template>
 </main>

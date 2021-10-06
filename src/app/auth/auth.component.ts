@@ -1,41 +1,36 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from './auth.service';
-import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent implements OnInit, OnDestroy {
-
-  subscription!: Subscription;
+export class AuthComponent {
   isLoading: boolean = false;
 
   constructor(
-    private socialAuthService: SocialAuthService,
-    private authService: AuthService,
     private router: Router,
-  ) { }
+    private _snackBar: MatSnackBar,
+    private authService: AuthService,
+  ) {}
 
-  ngOnInit() {
-    this.subscription = this.socialAuthService.authState.subscribe((user) => {
-      this.isLoading = true;
-      this.authService.getToken({idToken: user.idToken, googleToken: user.authToken})
-        .then(() => this.router.navigate(['/']))
-        .finally(() => this.isLoading = false);
-    });
-  }
+  signInWithGoogle(): Promise<boolean | void> {
+    this.isLoading = true;
 
-  signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    return this.authService.signIn()
+      .then(() => {
+        this._snackBar.open('Successfully logged in', 'Ok');
+        return this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        this._snackBar.open(error.error.message, 'Ok');
+      })
+      .finally(() => {
+        this.isLoading = false
+      });
   }
 }

@@ -2,10 +2,13 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { FoodSchedule } from '../../../core/models/food-schedule.model';
-import { SchedulesService } from '../schedules.service';
+import { FoodSchedulesService } from './food-schedules.service';
 import { formatDate } from '../../shared/utils/date';
+import { ConfirmationDialogComponent } from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-food-schedules',
@@ -14,6 +17,7 @@ import { formatDate } from '../../shared/utils/date';
 })
 export class FoodSchedulesComponent implements OnInit, AfterViewInit {
 
+  medicineScheduleId: string = this.route.snapshot.params.id;
   isLoading: boolean = false;
   pickedDate?: Date | undefined;
 
@@ -22,10 +26,15 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private schedulesService: SchedulesService, private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private foodSchedulesService: FoodSchedulesService
+  ) {}
 
   ngOnInit(): void {
-    this.schedulesService.getFoodSchedulesForMedicineSchedule(this.route.snapshot.params.id)
+    this.foodSchedulesService.getAll(this.medicineScheduleId)
       .then(response => this.onData(response));
   }
 
@@ -39,19 +48,43 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
 
   searchFoodSchedules(date: Date | undefined) {
     if (date) {
-      this.schedulesService.searchFoodSchedulesForMedicineSchedule(this.route.snapshot.params.id, formatDate(date))
+      this.foodSchedulesService.search(this.medicineScheduleId, formatDate(date))
         .then(response => this.onData(response));
     } else {
-      this.schedulesService.getFoodSchedulesForMedicineSchedule(this.route.snapshot.params.id)
+      this.foodSchedulesService.getAll(this.medicineScheduleId)
         .then(response => this.onData(response));
     }
   }
 
   onSetDefault(foodScheduleId: string) {
-    this.isLoading = true;
-    this.schedulesService.setAsDefaultFoodSchedule(foodScheduleId)
-      .then(() => console.log('Ready'))
-      .finally(() => this.isLoading = false);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { message: 'Are you sure you want to make default?' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.foodSchedulesService.setAsDefault(foodScheduleId)
+          .then(() => this._snackBar.open('Successfully made default value', 'Ok'))
+          .catch((error) => this._snackBar.open(error.error.message, 'Ok'))
+          .finally(() => this.isLoading = false);
+      }
+    });
   }
 
+  onDelete(foodScheduleId: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { message: 'Are you sure you want to delete?' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.foodSchedulesService.delete(foodScheduleId)
+          .then(() => this.foodSchedulesService.getAll(this.medicineScheduleId))
+          .then(response => this.onData(response))
+          .then(() => this._snackBar.open('Successfully deleted', 'Ok'))
+          .catch((error) => this._snackBar.open(error.error.message, 'Ok'))
+          .finally(() => this.isLoading = false);
+      }
+    });
+  }
 }

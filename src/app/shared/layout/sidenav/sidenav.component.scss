@@ -1,9 +1,17 @@
 .sidenav {
-  width: 320px;
-  min-height: 100vh;
-  padding: 20px;
-  background-color: #3F51B5;
 
+  &__content-wrapper {
+    height: 100%;
+    padding: 30px 20px;
+    background-color: #3F51B5;
+  }
+  &__link-wrapper {
+    margin: 16px 0;
+
+    &:last-child {
+      margin-top: 50px;
+    }
+  }
   &__title, &__link, &__btn {
     color: #FFFFFF;
     font-size: 26px;
@@ -11,6 +19,12 @@
   }
   &__link, &__btn {
     font-size: 22px;
+  }
+  &__link {
+
+    &--active {
+      color: #FFD300;
+    }
   }
   &__btn {
     border: none;
@@ -20,8 +34,4 @@
   &__link:hover, &__btn:hover {
     color: #FDA50F;
   }
-}
-
-.active-link {
-  color: #FFD300;
 }

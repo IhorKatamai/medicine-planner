@@ -6,3 +6,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.panel {
+  display: flex;
+  width: 600px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedules-table {
+  width: 100%;
+}

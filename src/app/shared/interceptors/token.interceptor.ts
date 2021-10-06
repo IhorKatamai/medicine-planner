@@ -15,14 +15,17 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('accessToken');
     const googleToken = localStorage.getItem('googleToken');
+
     if (accessToken && googleToken) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${accessToken}`,
           GoogleToken: googleToken,
+          'Accept-Language': 'en-GB',
         }
-      })
+      });
     }
+
     return next.handle(request);
   }
 }

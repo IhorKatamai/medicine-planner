@@ -8,11 +8,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { SchedulesRoutingModule } from './schedules-routing.module';
 import { SchedulesComponent } from './schedules.component';
 import { SchedulesService } from './schedules.service';
 import { FoodSchedulesComponent } from './food-schedules/food-schedules.component';
+import { FoodSchedulesService } from './food-schedules/food-schedules.service';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -32,8 +34,9 @@ import { SharedModule } from '../shared/shared.module';
     MatPaginatorModule,
     MatDatepickerModule,
     MatTooltipModule,
+    MatSnackBarModule,
     SharedModule
   ],
-  providers: [SchedulesService],
+  providers: [SchedulesService, FoodSchedulesService],
 })
 export class SchedulesModule { }
