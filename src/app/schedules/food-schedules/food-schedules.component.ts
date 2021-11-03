@@ -59,9 +59,9 @@ export class FoodSchedulesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onEdit(foodScheduleId: string, timeOfFirstMeal: string, numberOfMeals: string) {
+  onEdit(foodSchedule: FoodSchedule) {
     const dialogRef = this.dialog.open(FoodSchedulesEditDialogComponent, {
-      data: { timeOfFirstMeal, numberOfMeals }
+      data: foodSchedule
     });
     dialogRef.afterClosed().subscribe(result => console.log(result));
   }

@@ -1,19 +1,28 @@
-<h2 mat-dialog-title>Update Food Schedule</h2>
-<div mat-dialog-content>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Time of First Meal</mat-label>
-      <input matInput [(ngModel)]="data.timeOfFirstMeal" required>
-    </mat-form-field>
+<form #foodScheduleForm="ngForm">
+  <h2 mat-dialog-title>Update Food Schedule</h2>
+  <div mat-dialog-content>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Time of First Meal</mat-label>
+        <input matInput name="timeOfFirstMeal" [(ngModel)]="timeOfFirstMeal" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Number of Meals</mat-label>
+        <input matInput name="numberOfMeals" type="number" [(ngModel)]="numberOfMeals" min="1" max="24" required>
+        <mat-hint>Should be between 1 and 24</mat-hint>
+      </mat-form-field>
+    </div>
   </div>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Number of Meals</mat-label>
-      <input matInput type="number" [(ngModel)]="data.numberOfMeals" min="1" required>
-    </mat-form-field>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button
+            [mat-dialog-close]="data"
+            color="primary"
+            [disabled]="foodScheduleForm.invalid"
+    >
+      Submit
+    </button>
   </div>
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close color="warn">Cancel</button>
-  <button mat-raised-button [mat-dialog-close]="data" color="primary">Submit</button>
-</div>
+</form>
